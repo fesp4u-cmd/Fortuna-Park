@@ -21,6 +21,11 @@
     h1, h2, h3, h4 { font-family: Montserrat, sans-serif; }
     .hero-overlay { background: linear-gradient(180deg, rgba(5,46,22,.55), rgba(20,83,45,.86)); }
     .glass-card { background: rgba(255,255,255,.94); backdrop-filter: blur(10px); }
+    .page-section { display: none; }
+    .page-section.active { display: block; animation: fadeIn .3s ease-in-out; }
+    .page-section.active#page-home { display: flex; }
+    .nav-link.active-link { border-bottom: 2px solid #15803d; color: #15803d; font-weight: 700; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     :focus-visible { outline: 3px solid #4ade80; outline-offset: 3px; }
   </style>
 </head>
@@ -35,29 +40,29 @@
 
   <header class="sticky top-0 z-40 border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur">
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
-      <a href="#home" class="flex shrink-0 items-center gap-3" aria-label="Fortuna Park Site, главная">
+      <button type="button" data-route="home" class="flex shrink-0 items-center gap-3 text-left" aria-label="Fortuna Park Site, главная">
         <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-800 text-xl text-white"><i class="fa-solid fa-tree" aria-hidden="true"></i></span>
         <span><strong class="block text-base font-extrabold leading-tight text-emerald-950">Fortuna Park Site</strong><span class="text-[10px] font-semibold uppercase tracking-wider text-emerald-700">Gazipaşa · Antalya</span></span>
-      </a>
+      </button>
       <nav class="hidden items-center gap-5 text-xs font-semibold text-slate-700 xl:flex" aria-label="Основная навигация">
-        <a class="hover:text-emerald-700" href="#home">Главная</a><a class="hover:text-emerald-700" href="#surroundings">Инфраструктура</a><a class="hover:text-emerald-700" href="#announcements">Объявления</a><a class="hover:text-emerald-700" href="#rules">Правила</a><a class="hover:text-emerald-700" href="#documents">Документы</a><a class="hover:text-emerald-700" href="#gallery">Галерея</a><a class="hover:text-emerald-700" href="#contacts">Контакты</a>
+        <button id="nav-home" data-route="home" class="nav-link py-1 hover:text-emerald-700">Главная</button><button id="nav-infrastructure" data-route="infrastructure" class="nav-link py-1 hover:text-emerald-700">Инфраструктура</button><button id="nav-announcements" data-route="announcements" class="nav-link py-1 hover:text-emerald-700">Объявления</button><button id="nav-rules" data-route="rules" class="nav-link py-1 hover:text-emerald-700">Регламенты</button><button id="nav-documents" data-route="documents" class="nav-link py-1 hover:text-emerald-700">Документы</button><button id="nav-gallery" data-route="gallery" class="nav-link py-1 hover:text-emerald-700">Галерея</button><button id="nav-contacts" data-route="contacts" class="nav-link py-1 hover:text-emerald-700">Контакты</button>
       </nav>
       <div class="hidden items-center gap-2 sm:flex">
-        <a href="#issue-report" class="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-800 hover:bg-emerald-100"><i class="fa-solid fa-wrench mr-1.5" aria-hidden="true"></i>Заявка в УК</a>
+        <button data-route="issue" class="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-800 hover:bg-emerald-100"><i class="fa-solid fa-wrench mr-1.5" aria-hidden="true"></i>Заявка в УК</button>
         <button data-open-admin class="rounded-lg bg-emerald-800 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-900"><i class="fa-solid fa-lock mr-1.5" aria-hidden="true"></i>Панель УК</button>
       </div>
       <button id="menuButton" class="rounded p-2 text-xl text-slate-700 hover:text-emerald-700 xl:hidden" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
     </div>
     <nav id="mobileMenu" class="hidden border-t border-slate-200 bg-white px-4 py-3 xl:hidden" aria-label="Мобильная навигация">
       <div class="mx-auto grid max-w-7xl gap-1 text-sm font-medium text-slate-700">
-        <a class="mobile-link border-b border-slate-100 py-2" href="#home">Главная</a><a class="mobile-link border-b border-slate-100 py-2" href="#surroundings">Инфраструктура</a><a class="mobile-link border-b border-slate-100 py-2" href="#announcements">Объявления</a><a class="mobile-link border-b border-slate-100 py-2" href="#rules">Регламенты и правила</a><a class="mobile-link border-b border-slate-100 py-2" href="#documents">Документы и финансы</a><a class="mobile-link border-b border-slate-100 py-2" href="#gallery">Галерея</a><a class="mobile-link border-b border-slate-100 py-2" href="#contacts">Контакты</a>
-        <div class="grid gap-2 pt-2 sm:hidden"><a class="rounded-lg bg-emerald-50 py-2.5 text-center font-semibold text-emerald-800" href="#issue-report">Сообщить о проблеме</a><button data-open-admin class="rounded-lg bg-emerald-800 py-2.5 font-semibold text-white">Панель управления</button></div>
+        <button data-route="home" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Главная</button><button data-route="infrastructure" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Инфраструктура</button><button data-route="announcements" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Объявления</button><button data-route="rules" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Регламенты и правила</button><button data-route="documents" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Документы и финансы</button><button data-route="gallery" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Галерея</button><button data-route="contacts" class="mobile-link w-full border-b border-slate-100 py-2 text-left">Контакты</button>
+        <div class="grid gap-2 pt-2 sm:hidden"><button data-route="issue" class="rounded-lg bg-emerald-50 py-2.5 text-center font-semibold text-emerald-800">Сообщить о проблеме</button><button data-open-admin class="rounded-lg bg-emerald-800 py-2.5 font-semibold text-white">Панель управления</button></div>
       </div>
     </nav>
   </header>
 
   <main id="main">
-    <section id="home" class="relative flex min-h-[620px] items-center overflow-hidden bg-emerald-950 text-white">
+    <section id="page-home" class="page-section active relative flex min-h-[620px] items-center overflow-hidden bg-emerald-950 text-white">
       <img class="absolute inset-0 h-full w-full object-cover opacity-45" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1920&q=85" alt="Современный жилой комплекс" fetchpriority="high">
       <div class="hero-overlay absolute inset-0"></div>
       <div class="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-10 px-4 py-14 lg:grid-cols-12">
@@ -72,7 +77,7 @@
             <div class="glass-card rounded-lg border border-white/30 p-3 text-center text-slate-900"><i class="fa-solid fa-square-parking mb-2 text-xl text-emerald-700" aria-hidden="true"></i><strong class="block text-xs">Паркинг</strong><span class="text-[10px] text-slate-500">Крытый и открытый</span></div>
             <div class="glass-card col-span-2 rounded-lg border border-white/30 p-3 text-center text-slate-900 sm:col-span-2"><i class="fa-solid fa-location-dot mb-2 text-xl text-emerald-700" aria-hidden="true"></i><strong class="block text-xs">Газипаша, Анталья</strong><span class="text-[10px] text-slate-500">Средиземное море рядом</span></div>
           </div>
-          <div class="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start"><a href="#documents" class="rounded-lg bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-500"><i class="fa-solid fa-folder-open mr-2" aria-hidden="true"></i>Документы и сметы</a><a href="#contacts" class="rounded-lg border border-white/40 bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20"><i class="fa-solid fa-phone mr-2" aria-hidden="true"></i>Контакты</a></div>
+          <div class="mt-7 flex flex-wrap justify-center gap-3 lg:justify-start"><button data-route="documents" class="rounded-lg bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-500"><i class="fa-solid fa-folder-open mr-2" aria-hidden="true"></i>Документы и сметы</button><button data-route="contacts" class="rounded-lg border border-white/40 bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20"><i class="fa-solid fa-phone mr-2" aria-hidden="true"></i>Контакты</button></div>
         </div>
         <div class="mx-auto w-full max-w-md lg:col-span-5">
           <figure class="overflow-hidden rounded-xl border border-white/30 bg-white/10 p-2 shadow-2xl backdrop-blur">
@@ -83,9 +88,16 @@
       </div>
     </section>
 
-    <section id="surroundings" class="border-b border-slate-100 bg-white py-14">
+    <section id="page-infrastructure" class="page-section border-b border-slate-100 bg-white py-14">
       <div class="mx-auto max-w-7xl px-4"><div class="mx-auto mb-9 max-w-2xl text-center"><span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-emerald-800">Локация</span><h2 class="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">Окружение комплекса</h2><p class="mt-2 text-sm text-slate-600">Основные места и сервисы рядом с Fortuna Park Site.</p></div>
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="mb-6 flex justify-center gap-2 border-b border-slate-200 pb-4" role="group" aria-label="Раздел инфраструктуры"><button id="infra-tab-complex" class="infra-tab rounded-lg bg-emerald-800 px-4 py-2 text-xs font-bold text-white" data-tab="complex" aria-pressed="true">Инфраструктура ЖК</button><button id="infra-tab-surroundings" class="infra-tab rounded-lg bg-slate-100 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-200" data-tab="surroundings" aria-pressed="false">Окружение и пляж</button></div>
+        <div id="infra-content-complex" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-5 text-center"><i class="fa-solid fa-water-ladder mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Открытый бассейн</h3><p class="mt-2 text-xs leading-relaxed text-slate-600">Зона отдыха с шезлонгами и отдельной детской секцией.</p></article>
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-5 text-center"><i class="fa-solid fa-hot-tub-person mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Сауна и SPA</h3><p class="mt-2 text-xs leading-relaxed text-slate-600">Сауна для жильцов комплекса работает по расписанию.</p></article>
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-5 text-center"><i class="fa-solid fa-child-reaching mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Детская площадка</h3><p class="mt-2 text-xs leading-relaxed text-slate-600">Игровая зона для детей на территории комплекса.</p></article>
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-5 text-center"><i class="fa-solid fa-shield-halved mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Безопасность</h3><p class="mt-2 text-xs leading-relaxed text-slate-600">Закрытая территория и видеонаблюдение.</p></article>
+        </div>
+        <div id="infra-content-surroundings" class="hidden grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           <article class="rounded-lg border border-emerald-100 bg-emerald-50/60 p-5"><i class="fa-solid fa-umbrella-beach mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Пляж и море</h3><p class="my-1 text-xs font-semibold text-emerald-700">800 м · около 10 мин</p><p class="text-xs leading-relaxed text-slate-600">Пляжи Средиземного моря и набережная.</p></article>
           <article class="rounded-lg border border-emerald-100 bg-emerald-50/60 p-5"><i class="fa-solid fa-cart-shopping mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Супермаркеты</h3><p class="my-1 text-xs font-semibold text-emerald-700">200 м · около 3 мин</p><p class="text-xs leading-relaxed text-slate-600">Магазины и фермерский рынок по пятницам.</p></article>
           <article class="rounded-lg border border-emerald-100 bg-emerald-50/60 p-5"><i class="fa-solid fa-graduation-cap mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Школы и лицеи</h3><p class="my-1 text-xs font-semibold text-emerald-700">1,2 км</p><p class="text-xs leading-relaxed text-slate-600">Государственные и частные школы, детские сады.</p></article>
@@ -95,13 +107,13 @@
       </div>
     </section>
 
-    <section id="announcements" class="border-b border-slate-200 bg-slate-50 py-14">
+    <section id="page-announcements" class="page-section border-b border-slate-200 bg-slate-50 py-14">
       <div class="mx-auto max-w-7xl px-4"><div class="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><span class="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold uppercase text-emerald-800">Уведомления</span><h2 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Объявления и новости</h2><p class="mt-1 text-sm text-slate-600">Актуальная информация для жильцов комплекса.</p></div><div class="flex gap-2" role="group" aria-label="Фильтр объявлений"><button class="ann-filter rounded-lg bg-emerald-800 px-3 py-2 text-xs font-semibold text-white" data-category="all" aria-pressed="true">Все</button><button class="ann-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold text-slate-700" data-category="important" aria-pressed="false">Важное</button><button class="ann-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold text-slate-700" data-category="meetings" aria-pressed="false">Собрания</button></div></div>
         <div id="announcementsList" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
       </div>
     </section>
 
-    <section id="rules" class="border-b border-slate-100 bg-white py-14">
+    <section id="page-rules" class="page-section border-b border-slate-100 bg-white py-14">
       <div class="mx-auto max-w-7xl px-4"><div class="mx-auto mb-9 max-w-2xl text-center"><span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase text-emerald-800">Регламент</span><h2 class="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">Порядок и правила</h2><p class="mt-2 text-sm text-slate-600">Графики и рекомендации для комфортного проживания.</p></div>
         <div class="grid gap-5 md:grid-cols-3">
           <article class="rounded-lg border border-slate-200 bg-slate-50 p-5"><h3 class="mb-4 flex items-center gap-3 font-bold text-slate-900"><i class="fa-solid fa-water-ladder text-xl text-emerald-700" aria-hidden="true"></i>Бассейн и сауна</h3><ul class="space-y-3 text-xs leading-relaxed text-slate-700"><li><strong>Бассейн:</strong> ежедневно, 08:00–22:00</li><li><strong>Сауна:</strong> вт, чт, сб, 17:00–21:00</li><li>Перед посещением бассейна необходим душ.</li></ul></article>
@@ -111,14 +123,14 @@
       </div>
     </section>
 
-    <section id="documents" class="border-b border-slate-200 bg-slate-50 py-14">
+    <section id="page-documents" class="page-section border-b border-slate-200 bg-slate-50 py-14">
       <div class="mx-auto max-w-7xl px-4"><div class="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><span class="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold uppercase text-emerald-800">Документация</span><h2 class="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">Документы и финансы</h2><p class="mt-1 text-sm text-slate-600">Устав, протоколы и финансовые отчёты.</p></div><label class="relative block w-full md:w-72"><span class="sr-only">Поиск документов</span><i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-400" aria-hidden="true"></i><input id="docSearch" type="search" placeholder="Поиск документа..." class="w-full rounded-lg border border-slate-300 bg-white py-2 pl-9 pr-3 text-sm focus:border-emerald-600 focus:outline-none"></label></div>
         <div class="mb-5 flex flex-wrap gap-2 border-b border-slate-200 pb-3" role="group" aria-label="Категории документов"><button class="doc-filter rounded-lg bg-emerald-800 px-3 py-2 text-xs font-semibold text-white" data-category="all" aria-pressed="true">Все файлы</button><button class="doc-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold" data-category="charter" aria-pressed="false">Устав и законы</button><button class="doc-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold" data-category="finance" aria-pressed="false">Финансы и сметы</button><button class="doc-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold" data-category="decisions" aria-pressed="false">Решения правления</button><button class="doc-filter rounded-lg border bg-white px-3 py-2 text-xs font-semibold" data-category="archive" aria-pressed="false">Архив</button></div>
         <div class="overflow-hidden rounded-lg border border-slate-200 bg-white"><div class="overflow-x-auto"><table class="w-full min-w-[680px] text-left text-sm"><thead class="bg-slate-100 text-[10px] uppercase text-slate-600"><tr><th class="px-4 py-3">Документ</th><th class="px-4 py-3">Категория</th><th class="px-4 py-3">Дата</th><th class="px-4 py-3">Размер</th><th class="px-4 py-3 text-right">Действие</th></tr></thead><tbody id="documentsTableBody" class="divide-y divide-slate-100"></tbody></table></div></div>
       </div>
     </section>
 
-    <section id="issue-report" class="border-b border-slate-100 bg-white py-14">
+    <section id="page-issue" class="page-section border-b border-slate-100 bg-white py-14">
       <div class="mx-auto max-w-3xl px-4"><div class="rounded-xl bg-emerald-950 p-6 text-white sm:p-9"><span class="text-[10px] font-bold uppercase tracking-wider text-emerald-300"><i class="fa-solid fa-bolt mr-1" aria-hidden="true"></i>Быстрая связь</span><h2 class="mt-2 text-2xl font-extrabold sm:text-3xl">Заявка о проблеме</h2><p class="mb-6 mt-2 text-sm leading-relaxed text-emerald-100">Заполните форму, чтобы подготовить сообщение для управляющего в WhatsApp.</p>
         <form id="issueForm" class="space-y-4"><div class="grid gap-4 sm:grid-cols-2"><label class="text-xs font-medium text-emerald-100">Номер квартиры *<input id="aptNumber" required maxlength="30" placeholder="Например: A-12" class="mt-1 block w-full rounded-lg px-3 py-2.5 text-sm text-slate-900"></label><label class="text-xs font-medium text-emerald-100">Имя жильца *<input id="residentName" required maxlength="100" autocomplete="name" placeholder="Ваше имя" class="mt-1 block w-full rounded-lg px-3 py-2.5 text-sm text-slate-900"></label></div>
           <div class="grid gap-4 sm:grid-cols-2"><label class="text-xs font-medium text-emerald-100">Категория *<select id="issueCategory" class="mt-1 block w-full rounded-lg px-3 py-2.5 text-sm text-slate-900"><option>Сантехника / Водоснабжение</option><option>Электрика / Освещение</option><option>Благоустройство / Уборка</option><option>Лифт / Ворота / Домофон</option><option>Бассейн / Сауна</option><option>Другое</option></select></label><label class="text-xs font-medium text-emerald-100">Телефон для связи *<input id="residentPhone" type="tel" required maxlength="30" autocomplete="tel" placeholder="+90 5XX XXX XX XX" class="mt-1 block w-full rounded-lg px-3 py-2.5 text-sm text-slate-900"></label></div>
@@ -126,13 +138,22 @@
       </div></div>
     </section>
 
-    <section id="gallery" class="border-b border-slate-200 bg-slate-50 py-14">
+    <section id="page-gallery" class="page-section border-b border-slate-200 bg-slate-50 py-14">
       <div class="mx-auto max-w-7xl px-4"><div class="mb-9 text-center"><span class="rounded-full bg-emerald-100 px-3 py-1 text-[10px] font-bold uppercase text-emerald-800">Фотогалерея</span><h2 class="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">Территория и инфраструктура</h2><p class="mt-2 text-sm text-slate-600">Fortuna Park Site в Газипаше.</p></div>
         <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <button class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-200 text-left" data-src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1400&q=85" data-caption="Бассейн комплекса"><img class="h-full w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=700&q=80" alt="Открытый бассейн" loading="lazy"><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-sm font-semibold text-white">Открытый бассейн</span></button>
           <button class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-200 text-left" data-src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1400&q=85" data-caption="Архитектура комплекса"><img class="h-full w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=700&q=80" alt="Современное жилое здание" loading="lazy"><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-sm font-semibold text-white">Архитектура</span></button>
           <button class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-200 text-left" data-src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1400&q=85" data-caption="Зона отдыха"><img class="h-full w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=700&q=80" alt="Интерьер зоны отдыха" loading="lazy"><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-sm font-semibold text-white">Зона отдыха</span></button>
           <button class="gallery-item group relative aspect-[4/3] overflow-hidden rounded-lg bg-slate-200 text-left" data-src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=1400&q=85" data-caption="Детская площадка"><img class="h-full w-full object-cover transition duration-300 group-hover:scale-105" src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=700&q=80" alt="Детская игровая площадка" loading="lazy"><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-10 text-sm font-semibold text-white">Детская площадка</span></button>
+        </div>
+      </div>
+    </section>
+    <section id="page-contacts" class="page-section bg-white py-14">
+      <div class="mx-auto max-w-5xl px-4"><div class="mb-9 text-center"><span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase text-emerald-800">Связь</span><h2 class="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">Контакты и реквизиты</h2><p class="mt-2 text-sm text-slate-600">Управляющий и адрес жилого комплекса.</p></div>
+        <div class="grid gap-4 md:grid-cols-3">
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-6 text-center"><i class="fa-solid fa-user-gear mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Управляющий</h3><p class="mt-2 text-xs text-slate-600">Ахмет Йылмаз (Ahmet Yılmaz)</p><a class="mt-2 inline-block text-sm font-bold text-emerald-700 hover:underline" href="tel:+905301234567">+90 (530) 123-4567</a></article>
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-6 text-center"><i class="fa-solid fa-location-dot mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Адрес комплекса</h3><p class="mt-2 text-xs leading-relaxed text-slate-600">Pazarcı Mah., 14. Sokak No:8<br>07900 Gazipaşa / Antalya, Türkiye</p><a class="mt-3 inline-block text-xs font-semibold text-emerald-700 hover:underline" href="https://maps.google.com/?q=Gazipasa+Antalya" target="_blank" rel="noopener noreferrer">Открыть карту</a></article>
+          <article class="rounded-lg border border-slate-200 bg-slate-50 p-6 text-center"><i class="fa-solid fa-envelope mb-3 text-2xl text-emerald-700" aria-hidden="true"></i><h3 class="font-bold text-slate-900">Электронная почта</h3><p class="mt-2 text-xs text-slate-600">По вопросам управления комплексом</p><a class="mt-2 inline-block break-all text-xs font-semibold text-emerald-700 hover:underline" href="mailto:info@fortunapark-gazipasa.site">info@fortunapark-gazipasa.site</a></article>
         </div>
       </div>
     </section>
@@ -144,7 +165,7 @@
       <div><h2 class="mb-3 border-b border-emerald-800 pb-2 text-sm font-bold text-white">Контакты управления</h2><p class="text-xs text-emerald-200">Управляющий комплексом</p><p class="text-sm font-semibold text-white">Ахмет Йылмаз (Ahmet Yılmaz)</p><a class="mt-2 block text-sm hover:text-white" href="tel:+905301234567">+90 (530) 123-4567</a><a class="mt-1 block break-all text-xs hover:text-white" href="mailto:info@fortunapark-gazipasa.site">info@fortunapark-gazipasa.site</a></div>
       <div><h2 class="mb-3 border-b border-emerald-800 pb-2 text-sm font-bold text-white">Адрес и карта</h2><p class="mb-3 text-xs leading-relaxed text-emerald-200">Pazarcı Mah., 14. Sokak No:8, 07900 Gazipaşa/Antalya, Türkiye</p><a href="https://maps.google.com/?q=Gazipasa+Antalya" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-lg bg-emerald-800 px-3 py-2 text-xs font-semibold text-white hover:bg-emerald-700"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>Открыть Google Maps</a></div>
       <div><h2 class="mb-3 border-b border-emerald-800 pb-2 text-sm font-bold text-white">Аварийные службы</h2><p class="flex justify-between gap-2 text-xs"><span>Электрик</span><a class="font-bold text-white" href="tel:+905350001122">+90 535 000 1122</a></p><p class="mt-2 flex justify-between gap-2 text-xs"><span>Сантехник</span><a class="font-bold text-white" href="tel:+905350003344">+90 535 000 3344</a></p></div>
-    </div><div class="mt-9 flex flex-col items-center justify-between gap-3 border-t border-emerald-900 pt-5 text-xs text-emerald-400 sm:flex-row"><p>© 2026 Fortuna Park Site Gazipaşa</p><div class="flex gap-4"><button data-open-admin class="underline hover:text-white">Вход для администрации</button><a class="hover:text-white" href="#documents">Документы</a></div></div></div>
+    </div><div class="mt-9 flex flex-col items-center justify-between gap-3 border-t border-emerald-900 pt-5 text-xs text-emerald-400 sm:flex-row"><p>© 2026 Fortuna Park Site Gazipaşa</p><div class="flex gap-4"><button data-open-admin class="underline hover:text-white">Вход для администрации</button><button data-route="documents" class="hover:text-white">Документы</button></div></div></div>
   </footer>
 
   <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4" role="dialog" aria-modal="true" aria-label="Просмотр фотографии"><div class="relative w-full max-w-5xl"><button class="modal-close absolute -top-10 right-0 p-2 text-2xl text-white" aria-label="Закрыть"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button><img id="lightboxImage" class="mx-auto max-h-[80vh] w-auto rounded-lg object-contain" src="" alt=""><p id="lightboxCaption" class="mt-3 text-center text-sm text-white"></p></div></div>
@@ -251,6 +272,27 @@
     }
     byId('closeBanner').addEventListener('click', () => byId('topBanner').remove());
     const menuButton = byId('menuButton');
+    const routes = new Set(['home', 'infrastructure', 'announcements', 'rules', 'documents', 'issue', 'gallery', 'contacts']);
+    function navigateTo(route, addHistory = true) {
+      const page = route.replace(/^page-/, '');
+      if (!routes.has(page)) return;
+      document.querySelectorAll('.page-section').forEach(section => {
+        section.classList.toggle('active', section.id === `page-${page}`);
+      });
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active-link', link.dataset.route === page);
+      });
+      if (addHistory && location.hash !== `#${page}`) history.pushState({ page }, '', `#${page}`);
+      byId('mobileMenu').classList.add('hidden');
+      menuButton.setAttribute('aria-expanded', 'false');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    document.querySelectorAll('[data-route]').forEach(button => {
+      button.addEventListener('click', () => navigateTo(button.dataset.route));
+    });
+    window.addEventListener('popstate', () => navigateTo(location.hash.slice(1), false));
+    navigateTo(location.hash.slice(1) || 'home', false);
+
     menuButton.addEventListener('click', () => {
       const menu = byId('mobileMenu'); const opening = menu.classList.contains('hidden');
       menu.classList.toggle('hidden', !opening); menuButton.setAttribute('aria-expanded', String(opening));
@@ -263,6 +305,19 @@
     }));
     document.querySelectorAll('.doc-filter').forEach(button => button.addEventListener('click', () => {
       selectedDocCategory = button.dataset.category; setActive(document.querySelectorAll('.doc-filter'), button); renderDocuments();
+    }));
+    document.querySelectorAll('.infra-tab').forEach(button => button.addEventListener('click', () => {
+      const selected = button.dataset.tab;
+      ['complex', 'surroundings'].forEach(tab => {
+        byId(`infra-content-${tab}`).classList.toggle('hidden', tab !== selected);
+        const tabButton = byId(`infra-tab-${tab}`);
+        const isActive = tab === selected;
+        tabButton.setAttribute('aria-pressed', String(isActive));
+        tabButton.classList.toggle('bg-emerald-800', isActive);
+        tabButton.classList.toggle('text-white', isActive);
+        tabButton.classList.toggle('bg-slate-100', !isActive);
+        tabButton.classList.toggle('text-slate-700', !isActive);
+      });
     }));
     byId('docSearch').addEventListener('input', renderDocuments);
     byId('issueForm').addEventListener('submit', event => {
